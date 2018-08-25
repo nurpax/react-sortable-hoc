@@ -5,6 +5,37 @@ import {SortableContainer, SortableElement, arrayMove} from './src/index';
 import range from 'lodash/range';
 import random from 'lodash/random';
 
+function rect(props) {
+  const {ctx, x, y, width, height} = props;
+  ctx.fillStyle = '#f00'
+  ctx.fillRect(x, y, width, height);
+}
+
+class Circle extends Component {
+  constructor (props) {
+    super(props)
+    this.ref = React.createRef()
+  }
+
+  componentDidUpdate() {
+    this.updateCanvas();
+  }
+  updateCanvas() {
+    const ctx = this.ref.current.getContext('2d');
+    ctx.clearRect(0,0, 300, 300);
+    // draw children “components”
+    rect({ctx, x: 10, y: 10, width: 50, height: 50});
+    rect({ctx, x: 110, y: 110, width: 50, height: 50});
+  }
+
+  render () {
+    return (
+      <canvas ref={this.ref}>
+      </canvas>
+    )
+  }
+}
+
 const SortableItem = SortableElement(({height, value}) => (
     <div style={{
         position: 'relative',
@@ -18,6 +49,7 @@ const SortableItem = SortableElement(({height, value}) => (
         height: height
     }}>
         Item {value}
+        <Circle />
     </div>
 ));
 
