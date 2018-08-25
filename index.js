@@ -17,20 +17,25 @@ class Circle extends Component {
     this.ref = React.createRef()
   }
 
+  componentDidMount() {
+    this.updateCanvas()
+  }
+
   componentDidUpdate() {
     this.updateCanvas();
   }
+
   updateCanvas() {
     const ctx = this.ref.current.getContext('2d');
-    ctx.clearRect(0,0, 300, 300);
+    ctx.clearRect(0,0, 50, 50);
     // draw children “components”
-    rect({ctx, x: 10, y: 10, width: 50, height: 50});
-    rect({ctx, x: 110, y: 110, width: 50, height: 50});
+    rect({ctx, x: 10, y: 10, width: 10, height: 10});
+    rect({ctx, x: 20, y: 30, width: 10, height: 10});
   }
 
   render () {
     return (
-      <canvas ref={this.ref}>
+      <canvas ref={this.ref} width={50} height={50}>
       </canvas>
     )
   }
@@ -73,7 +78,7 @@ class Example extends Component {
         items: range(100).map((value) => {
             return {
                 value,
-                height: random(49, 120)
+                height: '100px'
             };
         })
     };
